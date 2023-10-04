@@ -12,9 +12,9 @@ const busyWait = (duration: number) => {
 
 export async function GET() {
   // sleep 50 sec
-  await busyWait(10000);
+  const result = await busyWait(10000);
 
-  const data = { message: "Hello World" };
+  const data = { message: result };
 
   return Response.json({ data });
 }
