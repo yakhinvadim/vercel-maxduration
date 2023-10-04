@@ -1,27 +1,32 @@
-const busyWait = (duration: number): Promise<boolean> => {
-  return new Promise((resolve) => {
-    const start = new Date().getTime();
-    const end = start + duration;
-    console.log("Busy-wait start:", start);
+const busyWait = async (duration: number, logs: string[]): Promise<boolean> => {
+  const start = new Date().getTime();
+  logs.push(`Busy-wait start: ${start}`);
+  const end = start + duration;
 
-    while (new Date().getTime() < end) {
-      // Busy-wait
-    }
+  while (new Date().getTime() < end) {
+    // Busy-wait
+  }
 
-    console.log("Busy-wait end:", new Date().getTime());
-    resolve(true);
-  });
+  const endBusyWait = new Date().getTime();
+  logs.push(`Busy-wait end: ${endBusyWait}`);
+  return true;
 };
 
-export async function GET(): Promise<any> {
-  console.log("GET function start:", new Date().getTime());
+export const GET = async (): Promise<any> => {
+  const logs: string[] = [];
+  const startGet = new Date().getTime();
+  logs.push(`GET function start: ${startGet}`);
 
-  // Busy-wait for 60 sec
-  const result = await busyWait(60000);
+  // Busy-wait for 60 seconds
+  const result = await busyWait(60000, logs);
 
-  console.log("GET function end:", new Date().getTime());
+  const endGet = new Date().getTime();
+  logs.push(`GET function end: ${endGet}`);
 
-  const data = { message: result };
+  const data = {
+    message: result,
+    logs,
+  };
 
   return Response.json({ data });
-}
+};
