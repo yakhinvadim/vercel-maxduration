@@ -1,18 +1,25 @@
-const busyWait = (duration: number) => {
+const busyWait = (duration: number): Promise<boolean> => {
   return new Promise((resolve) => {
-    const end = new Date().getTime() + duration;
+    const start = new Date().getTime();
+    const end = start + duration;
+    console.log("Busy-wait start:", start);
+
     while (new Date().getTime() < end) {
       // Busy-wait
     }
+
+    console.log("Busy-wait end:", new Date().getTime());
     resolve(true);
   });
 };
 
-// To occupy the function for 60 seconds
+export async function GET(): Promise<any> {
+  console.log("GET function start:", new Date().getTime());
 
-export async function GET() {
-  // sleep 50 sec
-  const result = await busyWait(10000);
+  // Busy-wait for 60 sec
+  const result = await busyWait(60000);
+
+  console.log("GET function end:", new Date().getTime());
 
   const data = { message: result };
 
