@@ -12,6 +12,8 @@ const busyWait = async (duration: number, logs: string[]): Promise<boolean> => {
   return true;
 };
 
+export const dynamic = "force-dynamic";
+
 export const GET = async (): Promise<any> => {
   const logs: string[] = [];
   const startGet = new Date().getTime();
