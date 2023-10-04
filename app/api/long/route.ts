@@ -1,36 +1,14 @@
-import exp from "constants";
-
-const busyWait = async (duration: number, logs: string[]): Promise<boolean> => {
-  const start = new Date().getTime();
-  logs.push(`Busy-wait start: ${start}`);
-  const end = start + duration;
-
-  while (new Date().getTime() < end) {
-    // Busy-wait
-  }
-
-  const endBusyWait = new Date().getTime();
-  logs.push(`Busy-wait end: ${endBusyWait}`);
+const busyWait = async (duration: number): Promise<boolean> => {
+  const end = new Date().getTime() + duration;
+  while (new Date().getTime() < end) {}
   return true;
 };
+
 export const maxDuration = 90;
 export const dynamic = "force-dynamic";
 
 export const GET = async (): Promise<any> => {
-  const logs: string[] = [];
-  const startGet = new Date().getTime();
-  logs.push(`GET function start: ${startGet}`);
-
-  // Busy-wait for 60 seconds
-  const result = await busyWait(70000, logs);
-
-  const endGet = new Date().getTime();
-  logs.push(`GET function end: ${endGet}`);
-
-  const data = {
-    message: result,
-    logs,
-  };
-
+  const result = await busyWait(70000);
+  const data = { message: result };
   return Response.json({ data });
 };
